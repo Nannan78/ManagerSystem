@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nan.dao.CommentDao">
+  <cache type="com.nan.cache.RedisCache" />
+    <resultMap type="com.nan.entity.Comment" id="CommentMap">
+        <result property="id" column="id" jdbcType="OTHER"/>
+        <result property="artId" column="art_id" jdbcType="OTHER"/>
+        <result property="userId" column="user_id" jdbcType="OTHER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryComById" resultMap="CommentMap">
+        select
+          id, art_id, user_id, content, date, status
+        from jdbc.comment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryComAllByLimit" resultMap="CommentMap">
+        select
+          id, art_id, user_id, content, date, status
+        from jdbc.comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryComAll" resultMap="CommentMap">
+        select
+          id, art_id, user_id, content, date, status
+        from jdbc.comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="artId != null">
+                and art_id = #{artId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryComAllDesc" resultMap="CommentMap">
+        select
+        id, art_id, user_id, content, date, status
+        from jdbc.comment order by id desc
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="artId != null">
+                and art_id = #{artId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryComAllwithUser" resultType="com.nan.entity.CommentWithUser">
+        select
+        c.id, c.art_id as artId, c.user_id as userId, c.content, c.date, c.status,u.username
+        from jdbc.comment c,jdbc.users u
+        where c.user_id=u.id
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertCom" keyProperty="id" useGeneratedKeys="true">
+        insert into jdbc.comment(art_id, user_id, content, date, status)
+        values (#{artId}, #{userId}, #{content}, #{date}, #{status})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateCom">
+        update jdbc.comment
+        <set>
+            <if test="artId != null">
+                art_id = #{artId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteComById">
+        delete from jdbc.comment where id = #{id}
+    </delete>
+
+</mapper>

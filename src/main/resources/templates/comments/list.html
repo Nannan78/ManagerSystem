@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Spica Admin</title>
+	<!-- base:css -->
+	<link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+	<link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+	<!-- endinject -->
+	<!-- inject:css -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- endinject -->
+	<link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+</head>
+
+<body>
+<div class="container-scroller d-flex">
+	<!--	公共边！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+	<div th:replace="~{commons/commons::sidebar2}"></div>
+	<!-- partial -->
+	<div class="container-fluid page-body-wrapper">
+		<!-- partial:./commons/_navbar.html -->
+		<!--		//公共头！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+		<div th:replace="~{commons/commons::topbar2}"></div>
+		<!-- partial -->
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h2 class="card-title">评论列表</h2>
+								<div><a class="btn btn-sm btn-success float-right" th:href="@{/comment/toaddcomment}">添加评论</a> </div>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+										<tr>
+											<th>username</th>
+											<th>article</th>
+											<th>comment</th>
+											<th>time</th>
+											<th>status</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr >
+										<tr th:each="commentuser:${commentUser}">
+											<td th:text="${commentuser.getUsername()}"></td>
+											<td th:text="${commentuser.getArtId()}"></td>
+											<td th:text="${commentuser.getContent()}"></td>
+											<td th:text="${#dates.format(commentuser.getDate(),'yyyy-MM-dd HH:mm')}"></td>
+											<td th:text="${commentuser.getStatus()==0?'未通过':'已通过'}"></td>
+											<td>
+												<a th:href="@{/comment/examine/}+${commentuser.getId()}"  class="btn btn-sm btn-primary" th:name="id">审核</a>
+												<a th:href="@{/comment/todelete?id=}+${commentuser.getId()}"   class="btn btn-sm btn-danger" th:name="id">删除</a>
+											</td>
+										</tr>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- content-wrapper ends -->
+			<!-- partial:../../commons/_footer.html -->
+			<div th:replace="~{commons/commons::footbar2}"></div>
+			<!-- partial -->
+		</div>
+		<!-- main-panel ends -->
+	</div>
+	<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- base:js -->
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<!-- endinject -->
+<!-- End custom js for this page-->
+</body>
+
+</html>

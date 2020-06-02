@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>pagination.js - Mss</title>
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+   <!-- <link rel="stylesheet" type="text/css" th:href="@{/pagination/style/pagination.css}" media="screen">-->
+    < <link rel="stylesheet" type="text/css" th:href="@{pagination}" media="screen">
+</head>
+<body>
+
+
+<div >
+    <div class="layui-col-md4">
+        <div class="layui-card">
+            <div class="layui-card-header layui-bg-gray" >系统日志</div>
+            <div class="layui-card-body" >
+                <table class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th>logContent</th>
+                    </tr>
+                    </thead>
+                    <tbody id="th">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/pagination/script/lib/jquery.min.js}"></script>
+<!--<script th:src="@{/pagination/script/jquery.pagination.js}"></script>-->
+<script th:src="@{pagination}"></script>
+
+<!--
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url:'ajax1',
+            type:'GET',
+            dataType: 'JSON',
+            data:{
+            },
+            success:function(data){
+                for(var i=0;i<data.size;i++){
+                    $("#th").append("<tr><td>"+data.list[i].logContent+"</td></tr>");
+                }
+                //返回条数
+                //获取总条数
+                console.log(data);
+                console.log(data.list)
+                $('.pagination').pagination({
+                    dataSource:data.list,
+                   /* coping:true,                 //是否开启首页和末页
+                    homePage:'首页',
+                    endPage:'末页',*/
+
+                    pageSize:1,
+                    prevContent:'&laquo',
+                    nextContent:'&raquo',
+                                      //当前页码
+                    callback:function (data,pagination) {     //这是一个回调函数
+                        console.log(pagination),
+                        $.ajax({
+                            url:'ajax',
+                            type:'POST',
+                            dataType: 'JSON',
+                            data:{
+                                rows:  5 , //我把行数传回给服务器中
+                                page:pagination.pageNumber , //显示第一页的数据
+                            },
+                            success:function (data) {
+                                console.log(data);
+                                console.log(data.size);
+                                $("#th").html(``);
+                                for(var i=0;i<data.size;i++){
+
+                                    $("#th").append("<tr><td>"+data.list[i].logContent+"</td></tr>");
+                                }
+
+                            }
+                        })
+
+                    }
+                });
+
+
+            }
+        })
+
+
+    })
+
+
+
+</script>-->
+<div class="pagination"></div>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url:'getCount',
+            type:'GET',
+            dataType: 'JSON',
+            data:{
+            },
+            success:function(data){
+                //返回条数
+                //获取总条数
+                console.log(data);
+                     $.ajax({
+                         url:'ajax1',
+                         type:'POST',
+                         dataType: 'JSON',
+                         data:{
+                             count:data.count,
+                         },
+                         success:function (data) {
+                             console.log(data);
+                             $('.pagination').pagination({
+                                 dataSource:data.list,
+                                 /* coping:true,                 //是否开启首页和末页
+                                  homePage:'首页',
+                                  endPage:'末页',*/
+                                 pageSize:5,
+                                 showPageNumbers: false,
+                                 showNavigator: true,
+                                 className: 'paginationjs-theme-blue paginationjs-big',
+                                 prevContent:'&laquo',
+                                 nextContent:'&raquo',
+                                 //当前页码
+                                 callback:function (data,pagination) {     //这是一个回调函数
+                                     console.log(pagination),
+                                         $.ajax({
+                                             url:'ajax',
+                                             type:'POST',
+                                             dataType: 'JSON',
+                                             data:{
+                                                 rows:  5 , //我把行数传回给服务器中
+                                                 page:pagination.pageNumber , //显示第一页的数据
+                                             },
+                                             success:function (data) {
+                                                 console.log(data);
+                                                 console.log(data.size);
+                                                 $("#th").html(``);
+                                                 for(var i=0;i<data.size;i++){
+
+                                                     $("#th").append("<tr><td>"+data.list[i].logContent+"</td></tr>");
+                                                 }
+
+                                             }
+                                         })
+
+                                 }
+                             });
+                         }
+
+                     })
+
+
+
+            }
+        })
+
+
+    })
+
+
+
+</script>
+
+</body>
+</html>
+

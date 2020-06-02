@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Spica Admin</title>
+	<!-- base:css -->
+	<link rel="stylesheet" th:href="@{vendors/mdi/css/materialdesignicons.min.css}">
+	<link rel="stylesheet" th:href="@{vendors/css/vendor.bundle.base.css}">
+	<!-- endinject -->
+	<!-- inject:css -->
+	<link rel="stylesheet" th:href="@{css/style.css}">
+	<!-- endinject -->
+	<link rel="shortcut icon" th:href="@{images/favicon.png}" />
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/pagination/paginationjs-master/dist/pagination.css}" media="screen">
+</head>
+
+<body>
+
+
+
+<div class="container-scroller d-flex">
+	<!-- partial:../../partials/_sidebar.html -->
+
+	<div th:replace="~{commons/commons::sidebar2}"></div>
+	<!-- partial -->
+	<div class="container-fluid page-body-wrapper">
+		<!-- partial:./commons/_navbar.html -->
+		<!--		//公共头！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+		<div th:replace="~{commons/commons::topbar2}"></div>
+		<!-- partial -->
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="layui-card-header layui-bg-blue">仪表盘</div>
+							<div class="card-body">
+								<div class="layui-row layui-col-space20" >
+									<div class=" layui-col-md4 ">
+										<div class="layui-card layui-bg-orange">
+											<div class="layui-card-header" style="text-align: center">
+												<span style="color: white">文章</span>
+											</div>
+											<div class="layui-card-body" style="height: 100px;text-align: center">
+												<p><span>发表了篇文章</span></p>
+												<br>
+												<a href="" class="text-white" style="text-decoration: none">
+													<i class="layui-icon layui-icon-read" style="font-size: 60px; color: whitesmoke;bottom: 0px"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class=" layui-col-md4 ">
+										<div class="layui-card layui-bg-red">
+											<div class="layui-card-header" style="text-align: center">
+												<span style="color: white">评论</span>
+											</div>
+											<div class="layui-card-body" style="height: 100px;text-align: center">
+												<p><span>收到了个评论</span></p>
+												<br>
+												<a href="" class="text-white" style="text-decoration: none">
+													<i class="layui-icon layui-icon-dialogue" style="font-size: 60px; color: whitesmoke;bottom: 0px"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class=" layui-col-md4 ">
+										<div class="layui-card layui-bg-green">
+											<div class="layui-card-header" style="text-align: center">
+												<span style="color: white">文件</span>
+											</div>
+											<div class="layui-card-body" style="height: 100px;text-align: center">
+												<p><span>上传了个文件</span></p>
+												<br>
+												<a href="" class="text-white" style="text-decoration: none">
+													<i class="layui-icon layui-icon-file-b" style="font-size: 60px; color: whitesmoke;bottom: 0px"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="layui-row layui-col-space20">
+										<div class="layui-col-md4">
+											<div class="layui-card">
+												<div class="layui-card-header layui-bg-gray">最新文章</div>
+												<div class="layui-card-body" >
+													<div class="layui-card" id="test2">
+
+
+													</div>
+													<div style="float: right;display: none">
+														<div class="pagination" style="float: right" id="pagination3"></div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+										<div class="layui-col-md4">
+											<div class="layui-card">
+												<div class="layui-card-header layui-bg-gray">最新评论</div>
+												<div class="layui-card-body">
+													<div class="layui-card" id="test1">
+
+
+													</div>
+													<div style="float: right;display: none">
+														<div class="pagination"  id="pagination2"></div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										<div class="layui-col-md4">
+											<div class="layui-card">
+												<div class="layui-card-header layui-bg-gray" >系统日志</div>
+
+												<div class="layui-card-body" >
+													<table class="table table-striped">
+														<thead>
+														<tr>
+															<th style='text-align: center'>日志内容</th>
+															<th style='text-align: center'>日期</th>
+														</tr>
+														</thead>
+														<tbody id="th1">
+
+														</tbody>
+													</table>
+													<br>
+													<div style="float: right">
+														<div class="pagination" id="pagination1"></div>
+													</div>
+													<br>
+													<br>
+
+												</div>
+
+											</div>
+										</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- content-wrapper ends -->
+		<!-- partial:../../partials/_footer.html -->
+		<div th:replace="~{commons/commons::footbar2}"></div>
+		<!-- partial -->
+	</div>
+	<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+<script th:src="@{/jquery-3.4.1.js}"></script>
+<!--<script th:src="@{/pagination/script/jquery.pagination.js}"></script>-->
+<script th:src="@{/pagination/paginationjs-master/src/pagination.js}"></script>
+
+
+
+<script type="text/javascript">
+	$(function () {
+		$.ajax({
+			url:'getCount/log',
+			type:'GET',
+			dataType: 'JSON',
+			data:{
+			},
+			success:function(data){
+				//返回条数
+				//获取总条数
+				console.log(data);
+				$.ajax({
+					url:'ajax1/log',
+					type:'POST',
+					dataType: 'JSON',
+					data:{
+						count:data.count,
+					},
+					success:function (data) {
+						console.log(data);
+						$('#pagination1').pagination({
+							dataSource:data.list,
+							/* coping:true,                 //是否开启首页和末页
+                             homePage:'首页',
+                             endPage:'末页',*/
+							pageSize:5,
+							showPageNumbers: false,
+							showNavigator: true,
+							className: 'paginationjs-theme-blue paginationjs-big',
+							prevContent:'&laquo',
+							nextContent:'&raquo',
+							//当前页码
+							callback:function (data,pagination) {     //这是一个回调函数
+								console.log(pagination),
+										$.ajax({
+											url:'ajax/log',
+											type:'POST',
+											dataType: 'JSON',
+											data:{
+												rows:  5 , //我把行数传回给服务器中
+												page:pagination.pageNumber , //显示第一页的数据
+											},
+											success:function (data) {
+												console.log(data);
+												console.log(data.size);
+												$("#th1").empty();
+
+												for(var i=0;i<data.size;i++){
+													var timestamp4 = new Date(data.list[i].date);
+													$("#th1").append("<tr>" +
+															"<td style='text-align: center'>"+data.list[i].logContent+"</td>" +
+															"<td style='text-align: center'>"+timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)+"</td>" +
+															"</tr>");
+												}
+
+											}
+										})
+							}
+						});
+					}
+				})
+			}
+		})
+	})
+</script>
+<script type="text/javascript">
+	$(function () {
+		$.ajax({
+			url:'getCount/comm',
+			type:'GET',
+			dataType: 'JSON',
+			data:{
+			},
+			success:function(data){
+				//返回条数
+				//获取总条数
+				console.log(data);
+				$.ajax({
+					url:'ajax1/comm',
+					type:'POST',
+					dataType: 'JSON',
+					data:{
+						count:data.count,
+					},
+					success:function (data) {
+						console.log(data);
+						$('#pagination2').pagination({
+							dataSource:data.list,
+							/* coping:true,                 //是否开启首页和末页
+                             homePage:'首页',
+                             endPage:'末页',*/
+							pageSize:4,
+							showPageNumbers: false,
+							showNavigator: true,
+							className: 'paginationjs-theme-blue paginationjs-big',
+							prevContent:'&laquo',
+							nextContent:'&raquo',
+							//当前页码
+							callback:function (data,pagination) {     //这是一个回调函数
+										console.log(pagination)
+										$.ajax({
+											url:'ajax/comm',
+											type:'POST',
+											dataType: 'JSON',
+											data:{
+												rows:  4 , //我把行数传回给服务器中
+												page:pagination.pageNumber , //显示第一页的数据
+											},
+											success:function (data) {
+												console.log(data);
+												console.log(data.size);
+												$("#test1").empty();
+
+												for(var i=0;i<data.size;i++){
+													var timestamp4 = new Date(data.list[i].date);
+													$("#test1").append(
+															"<div class=\"layui-card\">\n" +
+															"<div class=\"layui-card-header\">\n" +
+															"<div style=\"float:left\">" +data.list[i].userId+"</div>\n" +
+															"<div style=\"float:right\">"+timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)+"</div>\n" +
+															"</div>" +
+															"<div class=\"layui-card-body\">\n" +
+															data.list[i].content+
+															"  </div>\n" +
+															"</div>\n" +
+															""
+													);
+												}
+
+											}
+										})
+
+/*
+								"" +
+								"<div class=\"layui-card\">\n" +
+								"<div class=\"layui-card-header\">"+data.list[i].userId+
+								"<div class=\"layui-card-body\">"+
+								data.list[i].content+
+								"</div>" +
+								"</div>"*/
+
+
+							}
+						});
+					}
+				})
+			}
+		})
+	})
+</script>
+<script type="text/javascript">
+	$(function () {
+		$.ajax({
+			url:'getCount/art',
+			type:'GET',
+			dataType: 'JSON',
+			data:{
+			},
+			success:function(data){
+				//返回条数
+				//获取总条数
+				console.log(data);
+				$.ajax({
+					url:'ajax1/art',
+					type:'POST',
+					dataType: 'JSON',
+					data:{
+						count:data.count,
+					},
+					success:function (data) {
+						console.log(data);
+						$('#pagination3').pagination({
+							dataSource:data.list,
+							/* coping:true,                 //是否开启首页和末页
+                             homePage:'首页',
+                             endPage:'末页',*/
+							pageSize:4,
+							showPageNumbers: false,
+							showNavigator: true,
+							className: 'paginationjs-theme-blue paginationjs-big',
+							prevContent:'&laquo',
+							nextContent:'&raquo',
+							//当前页码
+							callback:function (data,pagination) {     //这是一个回调函数
+								console.log(pagination)
+								$.ajax({
+									url:'ajax/art',
+									type:'POST',
+									dataType: 'JSON',
+									data:{
+										rows:  4 , //我把行数传回给服务器中
+										page:pagination.pageNumber , //显示第一页的数据
+									},
+									success:function (data) {
+										console.log(data);
+										console.log(data.size);
+										$("#test2").empty()
+
+										for(var i=0;i<data.size;i++){
+											var timestamp4 = new Date(data.list[i].date);
+											$("#test2").append(
+													"<div class=\"layui-card\">\n" +
+													"<div class=\"layui-card-header\">\n" +
+													"<div style=\"float:left\">" +data.list[i].user_id+"</div>\n" +
+													"<div style=\"float:right\">"+timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)+"</div>\n" +
+													"</div>" +
+													"<div class=\"layui-card-body\">\n" +
+													data.list[i].article_name+
+													"  </div>\n" +
+													"</div>\n" +
+													""
+											);
+										}
+
+									}
+								})
+							}
+						});
+					}
+				})
+			}
+		})
+	})
+</script>
+
+
+<!--引入了下面这个js，就会导致pagination失效。。。。。-->
+<!--<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>-->
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<!--
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+-->
+
+
+</body>
+
+</html>

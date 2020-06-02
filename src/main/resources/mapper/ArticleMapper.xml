@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nan.mapper.ArticleMapper">
+    <cache type="com.nan.cache.RedisCache" />
+    <insert id="addArticle" parameterType="com.nan.pojo.Article">
+        insert into jdbc.article(article_name, article_style, article_content, date, user_id)
+        VALUES (#{article_name},#{article_style},#{article_content},#{date},#{user_id})
+    </insert>
+
+    <update id="updateArticle" parameterType="com.nan.pojo.Article">
+        update jdbc.article
+        set id=#{id},article_name=#{article_name},article_style=#{article_style},article_content=#{article_content},date=#{date},user_id=#{user_id}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteArticle" parameterType="int">
+        delete from jdbc.article where id=#{id};
+    </delete>
+
+    <select id="queryArticleById" resultType="com.nan.pojo.Article">
+        select * from jdbc.article where id=#{id};
+    </select>
+    <select id="queryArticles" resultType="com.nan.pojo.Article">
+        select * from jdbc.article
+    </select>
+
+    <select id="queryArticlesDesc" resultType="com.nan.pojo.Article">
+        select * from jdbc.article order by id desc
+    </select>
+
+    <select id="queryAllByLimit" resultType="com.nan.pojo.Article">
+        select
+            id, article_name, article_style, article_content, date,user_id
+        from jdbc.article  order by id desc
+        limit #{offset}, #{limit}
+    </select>
+
+
+
+
+    <select id="queryArticleByName" parameterType="String" resultType="com.nan.pojo.Article">
+        select * from jdbc.article where article_name=#{article_name};
+    </select>
+</mapper>

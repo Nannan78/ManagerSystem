@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script  th:src='@{/tinymce/js/tinymce/tinymce.js}'></script>
+
+
+
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+</head>
+
+<body>
+<h1>TinyMCE快速开始示例</h1>
+<form method="post" th:action="@{/testt}">
+    <textarea name="s" id="mytextarea">Hello, World!</textarea>
+    <button type="submit">1</button>
+</form>
+</body>
+</html>

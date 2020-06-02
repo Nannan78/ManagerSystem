@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spica Admin</title>
+
+
+ <!--   <link th:href="@{/admin/plugins/dropzone/4.3.0/min/dropzone.min.css}" rel="stylesheet">
+    <style>
+        #dropzone {
+            margin-bottom: 3rem;
+        }
+
+        .dropzone {
+            border: 2px dashed #0087F7;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .dropzone .dz-message {
+            font-weight: 400;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .dropzone .dz-message .note {
+            font-size: 0.8em;
+            font-weight: 200;
+            display: block;
+            margin-top: 1.4rem;
+        }
+
+        .attach-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px #333;
+        }
+
+        .attach-text {
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .attach-img:hover {
+            background-color: #f9f9f9;
+        }
+    </style>-->
+<style>
+    #upload{
+        display: none;
+    }
+</style>
+    <!-- base:css -->
+    <link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+
+</head>
+
+<body>
+
+<div class="col-md-12 portlets" id="upload">
+    <form th:action="@{/file/upload}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="file" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username">
+                <div class="input-group-append">
+                    <input class="btn btn-sm btn-primary" type="submit"></input>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="container-scroller d-flex">
+<!--    <script th:src="@{/jquery-3.4.1.js}"></script>-->
+    <!-- partial:../../partials/_sidebar.html -->
+    <div th:replace="~{commons/commons::sidebar2}"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <div th:replace="~{commons/commons::topbar2}"></div>
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">文件管理</h4>
+                                <button id="start">开启实时更新</button>
+                                <button id="stop">关闭实时更新</button>
+                                <div class="col-md-12 portlets">
+                                    <form th:action="@{/file/upload}" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="file" value="点击上传" name="file" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username">
+                                                <div class="input-group-append">
+                                                    <input class="btn btn-sm btn-primary" type="submit"></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+<!--                                <div class="col-md-12 portlets">
+                                    <form th:action="@{/file/upload}" method="post" enctype="multipart/form-data">
+                                        <input type="file" name="file">
+                                        <input type="submit" value="上传文件">
+                                    </form>
+                                </div>-->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>文件原始名</th>
+                                            <th>文件大小</th>
+                                            <th>类型</th>
+                                            <th>是否是图</th>
+                                            <th>下载次数</th>
+                                            <th>上传时间</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="file:${files}">
+                                            <td th:text="${file.getOldname()}"></td>
+                                            <td th:text="${#numbers.formatDecimal(file.getSize()/1024.0,1,2)}+'KB'"></td>
+                                            <td th:text="${file.getType()}"></td>
+                                            <td>
+                                                <img th:if="${file.getIsstring()=='yes'}" style="width: 100px;height: 40px;" th:src="${#servletContext.contextPath}+${file. getPath()}+'/'+${file.getNewname()}">
+                                                <span style="text-align: center" th:if="${file.getIsstring()!='yes'}" th:text="${file.getIsstring()}"></span>
+                                            </td>
+                                            <td th:id="${file.getId()}" th:text="${file.getCount()}"></td>
+                                            <td th:text="${#dates.format(file.getDate(),'yyyy-MM-dd HH:mm:ss')}"></td>
+                                            <td>
+                                                <a   class="btn btn-sm btn-primary" th:href="@{/file/download(id=${file.id})}">下载</a>
+                                            </td>
+                                            <td>
+                                                <a   class="btn btn-sm btn-danger" th:href="@{/file/delete(id=${file.id})}">删除</a>
+                                            </td>
+                                          <!--  <td>
+                                                <a th:href="@{/file/download(id=${file.id},openstyle='inline')}">在线打开</a>&ndash;&gt;
+                                            </td>-->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="~{commons/commons::footbar2}"></div>
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- base:js -->
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+
+<!--<script th:src="@{/admin/plugins/dropzone/4.3.0/min/dropzone.min.js}"></script>
+<script th:src="@{/admin/plugins/clipboard.js/1.6.0/clipboard.min.js}"></script>
+<script >
+    var tale = new $.tale();
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            attachPage: {
+                rows: []
+            },
+            isLoading: true
+        },
+        beforeCreate: function(){
+            vueLoding = this.$loading.show();
+        },
+        mounted: function () {
+            this.load(1);
+        },
+        methods: {
+            load: function (page) {
+                var $vm = this;
+                tale.get({
+                    url: '/admin/api/attaches',
+                    data: {
+                        page: page,
+                        limit: 12
+                    },
+                    success: function (data) {
+                        $vm.attachPage = data.payload
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert(error || '数据加载失败');
+                    }
+                });
+            },
+            deleteAttach: function (id) {
+                var $vm = this;
+                tale.alertConfirm({
+                    title: '确定删除该附件吗?',
+                    then: function () {
+                        tale.post({
+                            url: '/admin/api/attach/delete/' + id,
+                            success: function (result) {
+                                if (result && result.success) {
+                                    tale.alertOk('附件删除成功');
+                                    $vm.load(1);
+                                } else {
+                                    tale.alertError(result.msg || '附件删除失败');
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
+
+    Dropzone.autoDiscover = false;
+
+    $("#dropzone").dropzone({
+        url: "/admin/api/attach/upload",
+        filesizeBase: 1024,//定义字节算法 默认1000
+        maxFiles: $.constant().MAX_FILES,//最大文件数量
+        maxFilesize: '${maxFileSize()}', //MB
+        fallback: function () {
+            tale.alertError('暂不支持您的浏览器上传!');
+        },
+        uploadMultiple: true,
+        dictFileTooBig: '您的文件超过' + ${max_file_size} +'MB!',
+        dictInvalidInputType: '不支持您上传的类型',
+        dictMaxFilesExceeded: '您的文件超过' + $.constant().MAX_FILES + '个!',
+        headers: {
+            'X-CSRF-TOKEN': document.head.querySelector("[name=csrf_token]").content
+        },
+        init: function () {
+            this.on('queuecomplete', function (files) {
+                tale.alertOk('上传成功');
+                vm.load(1);
+            });
+            this.on('error', function (a, errorMessage, result) {
+                if (!result.success && result.msg) {
+                    tale.alertError(result.msg || '上传失败');
+                }
+            });
+            this.on('maxfilesreached', function () {
+                this.removeAllFiles(true);
+                tale.alertWarn('文件数量超出限制');
+            });
+        }
+    });
+
+    var clipboard = new Clipboard('button.copy', {
+        text: function (trigger) {
+            return $(trigger).attr('url');
+        }
+    });
+
+    clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        e.clearSelection();
+    });
+
+    $(document).ready(function () {
+        vm.isLoading = false;
+        vueLoding.hide();
+    });
+
+</script>-->
+
+<!-- endinject -->
+<!-- End custom js for this page-->
+</body>
+
+</html>

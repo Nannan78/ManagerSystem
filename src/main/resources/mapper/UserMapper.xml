@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nan.mapper.UserMapper">
+    <cache type="com.nan.cache.RedisCache" />
+    <insert id="addUser" parameterType="com.nan.pojo.User">
+        insert into jdbc.users (id, username, userpassword, email, birthday,role)
+        values (#{id},#{username},#{userpassword},#{email},#{birthday},#{role})
+    </insert>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from jdbc.users where id=#{id};
+    </delete>
+
+    <update id="updateUser" parameterType="com.nan.pojo.User">
+        update jdbc.users
+        set username=#{username} , userpassword=#{userpassword}, email=#{email},birthday=#{birthday},role=#{role}
+        where id = #{id}
+    </update>
+
+    <select id="queryUserById" resultType="com.nan.pojo.User">
+        select * from jdbc.users where id=#{id};
+    </select>
+
+    <select id="queryUsers" resultType="com.nan.pojo.User">
+        select * from jdbc.users;
+    </select>
+
+    <select id="queryUsersPermission" resultType="String">
+        select p.permission
+        from jdbc.users u,jdbc.role r,jdbc.role_permission rp,jdbc.permission p
+        where u.role=r.id and r.id=rp.role and rp.permission=p.id and u.id=#{id} ;
+    </select>
+
+
+    <select id="queryUserByName" parameterType="String" resultType="com.nan.pojo.User">
+        select * from jdbc.users where username=#{username};
+    </select>
+
+    <select id="queryUsersArticles" resultType="com.nan.pojo.Article">
+        select a.id, a.article_name, a.article_style, a.article_content, a.date
+        from jdbc.users u,jdbc.article a,jdbc.user_article ua
+        where u.id=ua.user_id and ua.article_id=a.id and u.id=#{id} ;
+    </select>
+</mapper>

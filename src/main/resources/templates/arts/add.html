@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Spica Admin</title>
+	<!-- base:css -->
+	<link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+	<link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+	<!-- endinject -->
+	<!-- inject:css -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<!-- endinject -->
+	<link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+
+	<!--富文本-->
+	<script  th:src='@{/tinymce/js/tinymce/tinymce.js}'></script>
+	<script>
+		tinymce.init({
+			selector: '#mytextarea',
+			height:500,
+		});
+	</script>
+</head>
+
+<body>
+<div class="container-scroller d-flex">
+	<!-- partial:../../partials/_sidebar.html -->
+	<div th:replace="~{commons/commons::sidebar2}"></div>
+	<!-- partial -->
+	<div class="container-fluid page-body-wrapper">
+		<!-- partial:../../partials/_navbar.html -->
+		<div th:replace="~{commons/commons::topbar2}"></div>
+		<!-- partial -->
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">文章发表</h4>
+
+								<form class="forms-sample" th:action="@{/art/addart}">
+									<input type="hidden" name="user_id" th:value="${session.login.getId()}">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label">article_name</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="article_name" id="exampleInputName1" required>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label">article_style</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control"  name="article_style" id="exampleInputPassword4" >
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="mytextarea">article_content</label>
+										<textarea name="article_content" class="form-control" id="mytextarea"  placeholder="article_content">Hello,Write an article here!</textarea>
+									</div>
+									<!--<div class="form-group">
+										<label for="date">date</label>
+										<input type="text" class="form-control"  name="date" id="date" placeholder="birth">
+								&lt;!&ndash;		<script src="/laydate/laydate.js"></script>
+										<script>
+											laydate.render({
+												elem: '#shengri'
+												,theme: 'molv'
+											});
+										</script>&ndash;&gt;
+									</div>-->
+									<button type="submit" class="btn btn-primary mr-2">Submit</button>
+									<a th:href="@{/art/arts}" class="btn btn-light">Cancel</a>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- content-wrapper ends -->
+			<!-- partial:../../partials/_footer.html -->
+			<div th:replace="~{commons/commons::footbar2}"></div>
+			<!-- partial -->
+		</div>
+		<!-- main-panel ends -->
+	</div>
+	<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- base:js -->
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- Custom js for this page-->
+<script src="../../js/file-upload.js"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+
+
