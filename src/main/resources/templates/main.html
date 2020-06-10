@@ -286,10 +286,11 @@
 													$("#test1").append(
 															"<div class=\"layui-card\">\n" +
 															"<div class=\"layui-card-header\">\n" +
-															"<div style=\"float:left\">" +data.list[i].userId+"</div>\n" +
+															"<div style=\"float:left\">"+"用户ID:" +data.list[i].userId+"</div>\n" +
 															"<div style=\"float:right\">"+timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)+"</div>\n" +
 															"</div>" +
 															"<div class=\"layui-card-body\">\n" +
+															"内容："+
 															data.list[i].content+
 															"  </div>\n" +
 															"</div>\n" +
@@ -371,10 +372,11 @@
 											$("#test2").append(
 													"<div class=\"layui-card\">\n" +
 													"<div class=\"layui-card-header\">\n" +
-													"<div style=\"float:left\">" +data.list[i].user_id+"</div>\n" +
+													"<div style=\"float:left\">" +"用户ID:"+data.list[i].user_id+"</div>\n" +
 													"<div style=\"float:right\">"+timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)+"</div>\n" +
 													"</div>" +
 													"<div class=\"layui-card-body\">\n" +
+													"标题："+
 													data.list[i].article_name+
 													"  </div>\n" +
 													"</div>\n" +

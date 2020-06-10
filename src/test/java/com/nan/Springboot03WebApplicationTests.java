@@ -20,6 +20,7 @@ import com.nan.service.LogService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,7 +31,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @ComponentScan(basePackages = "com.nan.mapper")
-@SpringBootTest
+@SpringBootTest(classes = Springboot03WebApplication.class)
 @RunWith(SpringRunner.class)
 public class Springboot03WebApplicationTests {
     @Autowired
